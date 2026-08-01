@@ -19,6 +19,10 @@ const DashboardPage = lazy(() =>
   import('../pages/DashboardPage').then(m => ({ default: m.DashboardPage }))
 );
 
+const BatchDetailPage = lazy(() =>
+  import('../pages/BatchDetailPage').then(m => ({ default: m.BatchDetailPage }))
+);
+
 const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || '';
 
 // Main app content with routing
@@ -46,6 +50,17 @@ const AppContent: React.FC = () => {
           <ProtectedRoute requiredRoles={[UserRole.WORKER, UserRole.SUPERVISOR, UserRole.MANAGER, UserRole.ADMIN]}>
             <Suspense fallback={<LoadingSpinner text="Loading dashboard..." />}>
               <DashboardPage />
+            </Suspense>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/batches/:batch_id"
+        element={
+          <ProtectedRoute requiredRoles={[UserRole.SUPERVISOR, UserRole.MANAGER, UserRole.ADMIN]}>
+            <Suspense fallback={<LoadingSpinner text="Loading batch details..." />}>
+              <BatchDetailPage />
             </Suspense>
           </ProtectedRoute>
         }
