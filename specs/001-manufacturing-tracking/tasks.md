@@ -57,14 +57,14 @@
 
 ### Core API & HTTP Client
 
-- [ ] T017 [P] Create axios HTTP client in src/shared/services/apiClient.ts with:
+- [X] T017 [P] Create axios HTTP client in src/shared/services/apiClient.ts with:
   - Base URL from environment variable VITE_API_BASE_URL
   - Request/response interceptors
   - Error handling that catches 401 (auth failure) and 500 (server error)
   - Support for Bearer token in Authorization header
   - Timeout set to 30 seconds for standard requests
 
-- [ ] T018 [P] Create TanStack Query setup in src/shared/services/queryClient.ts with:
+- [X] T018 [P] Create TanStack Query setup in src/shared/services/queryClient.ts with:
   - Default config: staleTime 30000ms (30s), cacheTime 5min
   - Error handler for 401 (redirect to login), 500 (show error toast)
   - Retry logic: 3 retries with exponential backoff for network errors
@@ -72,7 +72,7 @@
 
 ### Routing & Protected Routes
 
-- [ ] T019 [P] Create routing structure in src/app/routes.tsx defining:
+- [X] T019 [P] Create routing structure in src/app/routes.tsx defining:
   - Public routes: /auth/login, /auth/callback, /404
   - Protected routes: /dashboard, /batches/:batch_id, /quality, /reports, /admin
   - Role-based route guards (WORKER, SUPERVISOR, MANAGER, QUALITY_CONTROLLER, ADMIN)
@@ -107,20 +107,20 @@
 
 ### Layout Components
 
-- [ ] T024 [P] Create Header component in src/shared/components/Header.tsx with:
+- [X] T024 [P] Create Header component in src/shared/components/Header.tsx with:
   - Left side: Company logo or site title
   - Right side: User name, role badge, dropdown menu
   - Logout button in dropdown
   - Role-specific badge showing current role (WORKER, SUPERVISOR, etc.)
   - Mobile responsive (header collapses on mobile, nav moves to burger menu)
 
-- [ ] T025 [P] Create Footer component in src/shared/components/Footer.tsx with:
+- [X] T025 [P] Create Footer component in src/shared/components/Footer.tsx with:
   - Copyright notice
   - Links to company/support pages
   - Privacy and Terms links
   - Responsive footer that stacks on mobile
 
-- [ ] T026 [P] Create Navigation component in src/shared/components/Navigation.tsx that:
+- [X] T026 [P] Create Navigation component in src/shared/components/Navigation.tsx that:
   - Shows role-appropriate menu items based on user role
   - WORKER role: Dashboard, My Work, Batch Search, Logout
   - SUPERVISOR role: Dashboard, Production, Quality, Batch Search, Logout
@@ -130,14 +130,14 @@
   - Active route highlighted
   - Mobile: hamburger menu that collapses/expands
 
-- [ ] T027 [P] Create AppLayout wrapper in src/layouts/AppLayout.tsx that:
+- [X] T027 [P] Create AppLayout wrapper in src/layouts/AppLayout.tsx that:
   - Combines Header + Navigation + Footer
   - Main content area for page components
   - Sticky header on scroll
   - Responsive layout (flex column on mobile, row on desktop if needed)
   - Accessible landmark structure (nav, main, footer)
 
-- [ ] T028 [P] Create AuthLayout wrapper in src/layouts/AuthLayout.tsx (login-only layout) with:
+- [X] T028 [P] Create AuthLayout wrapper in src/layouts/AuthLayout.tsx (login-only layout) with:
   - No header/nav/footer
   - Centered login form
   - Company branding
@@ -145,13 +145,13 @@
 
 ### Global Styles & Theme
 
-- [ ] T029 Create global CSS in src/index.css with:
+- [X] T029 Create global CSS in src/index.css with:
   - Tailwind CSS directives (@tailwind base, components, utilities)
   - CSS custom properties for theming (--color-primary, --color-success, --color-warning, etc.)
   - Dark mode support (prefers-color-scheme media query)
   - Typography defaults (Inter font family, line-height ratios, heading hierarchy)
 
-- [ ] T030 Configure TailwindCSS color palette in tailwind.config.ts with:
+- [X] T030 Configure TailwindCSS color palette in tailwind.config.ts with:
   - Primary: navy #003366
   - Secondary: teal #00897B
   - Success: green #4CAF50
@@ -160,11 +160,11 @@
   - Neutral: slate grays (50, 100, 200, 300, 400, 500, 600, 700, 800, 900)
   - Extend with CSS variables plugin for light/dark mode
 
-- [ ] T031 Setup spacing scale in TailwindCSS config (4px base: gap-1=4px, gap-2=8px, gap-4=16px, etc.)
+- [X] T031 Setup spacing scale in TailwindCSS config (4px base: gap-1=4px, gap-2=8px, gap-4=16px, etc.)
 
 ### Shared UI Components & Utilities
 
-- [ ] T032 [P] Create StatusBadge component in src/shared/components/StatusBadge.tsx for stage status display:
+- [X] T032 [P] Create StatusBadge component in src/shared/components/StatusBadge.tsx for stage status display:
   - Props: status ('GREEN' | 'YELLOW' | 'RED'), label (stage name)
   - GREEN: teal background, white text
   - YELLOW: amber background, dark text
@@ -172,19 +172,19 @@
   - Includes icon (checkmark, alert, error)
   - Accessible color + icon (not color-only indicator)
 
-- [ ] T033 [P] Create LoadingSpinner component in src/shared/components/LoadingSpinner.tsx:
+- [X] T033 [P] Create LoadingSpinner component in src/shared/components/LoadingSpinner.tsx:
   - Centered animated spinner
   - Optional loading text
   - Aria role="status" for screen readers
   - Responsive size (smaller on mobile)
 
-- [ ] T034 [P] Create ErrorBoundary component in src/shared/components/ErrorBoundary.tsx:
+- [X] T034 [P] Create ErrorBoundary component in src/shared/components/ErrorBoundary.tsx:
   - Catches React component errors
   - Displays user-friendly error message (not stack trace)
   - "Try again" button that resets error boundary
   - Logs error details to console/monitoring service
 
-- [ ] T035 [P] Create FormError component in src/shared/components/FormError.tsx:
+- [X] T035 [P] Create FormError component in src/shared/components/FormError.tsx:
   - Displays inline field-level validation errors
   - Associated to field via aria-describedby
   - Red text with 4.5:1 contrast ratio
@@ -192,42 +192,42 @@
 
 ### Shared Hooks & Utilities
 
-- [ ] T036 [P] Create useConnectionStatus hook in src/shared/hooks/useConnectionStatus.ts:
+- [X] T036 [P] Create useConnectionStatus hook in src/shared/hooks/useConnectionStatus.ts:
   - Detects online/offline status via navigator.onLine
   - Periodic health check to /api/health endpoint (every 10s when offline)
   - Returns { isOnline: boolean, lastCheckedAt: Date }
   - Triggers sync when connection restored
 
-- [ ] T037 [P] Create useMobileLayout hook in src/shared/hooks/useMobileLayout.ts:
+- [X] T037 [P] Create useMobileLayout hook in src/shared/hooks/useMobileLayout.ts:
   - Detects viewport width and returns breakpoint (mobile, tablet, desktop)
   - Mobile: ≤768px, Tablet: 768px-1024px, Desktop: >1024px
   - Listens to window resize events
   - Memoized to prevent unnecessary re-renders
 
-- [ ] T038 [P] Create useLocalStorage hook in src/shared/hooks/useLocalStorage.ts:
+- [X] T038 [P] Create useLocalStorage hook in src/shared/hooks/useLocalStorage.ts:
   - Reads/writes values to localStorage
   - Syncs across browser tabs
   - Handles JSON serialization/deserialization
   - Includes remove() function
 
-- [ ] T039 [P] Create useDebounce hook in src/shared/hooks/useDebounce.ts:
+- [X] T039 [P] Create useDebounce hook in src/shared/hooks/useDebounce.ts:
   - Debounces value changes (default 300ms)
   - Used for search inputs, filter changes
   - Returns debounced value
 
-- [ ] T040 [P] Create formatters utility in src/shared/utils/formatters.ts with:
+- [X] T040 [P] Create formatters utility in src/shared/utils/formatters.ts with:
   - formatDate(date, format) - format timestamps (ISO, local, relative)
   - formatTime(seconds) - format duration (1.5h, 45m, 30s)
   - formatNumber(num) - format integers with thousand separators
   - formatBatchId(id) - format batch ID for display
 
-- [ ] T041 [P] Create validators utility in src/shared/utils/validators.ts with:
+- [X] T041 [P] Create validators utility in src/shared/utils/validators.ts with:
   - validateBatchId(id) - batch ID format validation
   - validateEmail(email) - email format
   - validateRequired(value) - non-empty check
   - Custom async validators for API calls
 
-- [ ] T042 [P] Create constants utility in src/shared/utils/constants.ts with:
+- [X] T042 [P] Create constants utility in src/shared/utils/constants.ts with:
   - API endpoint base paths (/auth, /batches, /quality, /reports)
   - Manufacturing stage names and order (PLANNING, MIXING, MOLDING, CURING, FINISHING, QUALITY, PACKAGING, SHIPPING)
   - User roles (WORKER, SUPERVISOR, MANAGER, QUALITY_CONTROLLER, ADMIN)
@@ -236,13 +236,13 @@
 
 ### Offline Support & Queue
 
-- [ ] T043 [P] Create IndexedDB service in src/shared/services/indexedDbService.ts for offline queue:
+- [X] T043 [P] Create IndexedDB service in src/shared/services/indexedDbService.ts for offline queue:
   - Database name: "manufacturing_tracking"
   - Store name: "pending_requests"
   - Stores: { id, timestamp, endpoint, method, payload, retryCount }
   - Methods: addRequest(), getPendingRequests(), removeRequest(), clearAll()
 
-- [ ] T044 [P] Create sync service in src/shared/services/syncService.ts:
+- [X] T044 [P] Create sync service in src/shared/services/syncService.ts:
   - Checks connection status before attempting sync
   - Retrieves pending requests from IndexedDB
   - Batches requests (max 10 per sync, FIFO order)
@@ -253,7 +253,7 @@
 
 ### App Entry Point
 
-- [ ] T045 Create App.tsx in src/app/App.tsx:
+- [X] T045 Create App.tsx in src/app/App.tsx:
   - Wraps entire app with AuthContext provider
   - Wraps with TanStack QueryClientProvider
   - Validates session on mount via useSession hook
@@ -261,7 +261,7 @@
   - Renders routing based on authentication status
   - Renders LoadingSpinner while auth is checking
 
-- [ ] T046 Create main.tsx Vite entry point in src/app/main.tsx:
+- [X] T046 Create main.tsx Vite entry point in src/app/main.tsx:
   - Imports App component
   - Renders to root DOM element
   - Setup React strict mode for development
