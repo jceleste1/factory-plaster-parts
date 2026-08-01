@@ -1,0 +1,34 @@
+# Don't publish these files
+
+# Source
+src/
+specs/
+.github/
+.specify/
+.vscode/
+
+# Development
+*.md
+.env*
+.git*
+.eslintrc*
+.prettierrc*
+tailwind.config.*
+tsconfig.json
+vite.config.ts
+playwright.config.ts
+
+# Testing
+coverage/
+*.test.ts
+*.test.tsx
+*.spec.ts
+*.spec.tsx
+
+# Logs
+*.log
+npm-debug.log*
+
+# Temporary
+.DS_Store
+Thumbs.db

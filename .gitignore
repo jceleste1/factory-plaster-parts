@@ -1,0 +1,59 @@
+# Build & Dependencies
+node_modules/
+dist/
+build/
+out/
+.next/
+*.egg-info/
+__pycache__/
+*.pyc
+
+# Environment
+.env
+.env.local
+.env.*.local
+.env.*.local.js
+
+# IDE & Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+*.sublime-project
+*.sublime-workspace
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+pnpm-debug.log*
+
+# Testing & Coverage
+coverage/
+.nyc_output/
+*.lcov
+.jest-cache/
+.vitest/
+
+# Build artifacts
+*.tsbuildinfo
+tsconfig.tsbuildinfo
+.parcel-cache/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Temporary files
+*.tmp
+*.bak
+
+# Package manager locks (optional - uncomment to commit)
+# package-lock.json
+# yarn.lock
+# pnpm-lock.yaml

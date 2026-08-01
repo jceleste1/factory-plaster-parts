@@ -1,0 +1,83 @@
+module.exports = {
+  content: [
+    "./index.html",
+    "./src/**/*.{js,ts,jsx,tsx}",
+  ],
+  theme: {
+    extend: {
+      colors: {
+        primary: {
+          50: '#f0f4f8',
+          100: '#d9e2f0',
+          200: '#b3c5e1',
+          300: '#8ca8d2',
+          400: '#668bc3',
+          500: '#406db4',
+          600: '#2d5090',
+          700: '#1a336d',
+          800: '#0d1a4a',
+          900: '#003366',
+        },
+        secondary: {
+          50: '#e0f2f1',
+          100: '#b2dfdb',
+          200: '#80cbc4',
+          300: '#4db8ac',
+          400: '#26a69a',
+          500: '#009688',
+          600: '#00897b',
+          700: '#00796b',
+          800: '#00695c',
+          900: '#004d40',
+        },
+        success: '#4CAF50',
+        warning: '#FFA726',
+        danger: '#EF5350',
+        neutral: {
+          50: '#f9fafb',
+          100: '#f3f4f6',
+          200: '#e5e7eb',
+          300: '#d1d5db',
+          400: '#9ca3af',
+          500: '#6b7280',
+          600: '#4b5563',
+          700: '#374151',
+          800: '#1f2937',
+          900: '#111827',
+        },
+      },
+      spacing: {
+        '4px': '4px',
+        '8px': '8px',
+        '12px': '12px',
+        '16px': '16px',
+        '20px': '20px',
+        '24px': '24px',
+        '32px': '32px',
+        '40px': '40px',
+        '48px': '48px',
+      },
+      fontSize: {
+        xs: ['12px', { lineHeight: '16px' }],
+        sm: ['14px', { lineHeight: '20px' }],
+        base: ['16px', { lineHeight: '24px' }],
+        lg: ['18px', { lineHeight: '28px' }],
+        xl: ['20px', { lineHeight: '28px' }],
+        '2xl': ['24px', { lineHeight: '32px' }],
+        '3xl': ['30px', { lineHeight: '36px' }],
+      },
+      minHeight: {
+        '44px': '44px',
+      },
+      minWidth: {
+        '44px': '44px',
+      },
+      animation: {
+        'spin': 'spin 1s linear infinite',
+      },
+    },
+  },
+  plugins: [
+    require('tailwindcss-animate'),
+  ],
+}
