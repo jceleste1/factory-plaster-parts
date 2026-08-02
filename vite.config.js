@@ -31,7 +31,6 @@ export default defineConfig({
                 manualChunks: {
                     'react-vendor': ['react', 'react-dom'],
                     'query-vendor': ['@tanstack/react-query'],
-                    'ui-vendor': ['@radix-ui/react-dialog', '@radix-ui/react-dropdown-menu'],
                 },
             },
         },

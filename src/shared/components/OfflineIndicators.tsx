@@ -1,7 +1,7 @@
 // T159-T162: Offline Support & Queue Indicators
 import React, { useEffect, useState } from 'react';
 import { Wifi, WifiOff, AlertCircle, Check, Clock } from 'lucide-react';
-import { useConnectionStatus } from '../../hooks/useConnectionStatus';
+import { useConnectionStatus } from '@/shared/hooks/useConnectionStatus';
 
 /**
  * T159: Offline Indicator Banner

@@ -21,7 +21,7 @@ const DEFAULT_CONFIG: SyncServiceConfig = {
 class SyncService {
   private config: SyncServiceConfig;
   private isSyncing = false;
-  private syncInterval: NodeJS.Timeout | null = null;
+  private syncInterval: ReturnType<typeof setInterval> | null = null;
 
   constructor(config: Partial<SyncServiceConfig> = {}) {
     this.config = { ...DEFAULT_CONFIG, ...config };

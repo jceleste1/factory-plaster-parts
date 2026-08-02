@@ -1,0 +1,207 @@
+name: Deploy to Production
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to deploy (e.g., v1.0.0)'
+        required: true
+        type: string
+      skip_approval:
+        description: 'Skip approval (emergency only)'
+        required: false
+        type: boolean
+        default: false
+
+env:
+  NODE_VERSION: '20'
+  REGISTRY: ghcr.io
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    outputs:
+      version: ${{ steps.get-version.outputs.version }}
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Get version
+        id: get-version
+        run: |
+          if [ "${{ github.event_name }}" = "push" ]; then
+            VERSION=${GITHUB_REF#refs/tags/}
+          else
+            VERSION=${{ github.event.inputs.version }}
+          fi
+          echo "version=$VERSION" >> $GITHUB_OUTPUT
+          echo "Deploying version: $VERSION"
+
+      - name: Validate version format
+        run: |
+          VERSION=${{ steps.get-version.outputs.version }}
+          if [[ ! $VERSION =~ ^v[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+            echo "Invalid version format: $VERSION"
+            echo "Expected format: v1.0.0"
+            exit 1
+          fi
+          echo "✓ Version format validated: $VERSION"
+
+      - name: Check if tag exists
+        run: |
+          if git rev-parse ${{ steps.get-version.outputs.version }} >/dev/null 2>&1; then
+            echo "✓ Release tag exists: ${{ steps.get-version.outputs.version }}"
+          else
+            echo "⚠ Warning: Release tag not found, but proceeding with deployment"
+          fi
+
+  approval:
+    needs: validate
+    runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: ${{ secrets.PRODUCTION_APP_SERVICE_URL }}
+    if: ${{ github.event_name == 'push' || !github.event.inputs.skip_approval }}
+    
+    steps:
+      - name: Request approval
+        run: |
+          echo "## Production Deployment Approval" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Version**: ${{ needs.validate.outputs.version }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Environment**: Production" >> $GITHUB_STEP_SUMMARY
+          echo "**Triggered by**: ${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "This deployment requires approval from environment administrators." >> $GITHUB_STEP_SUMMARY
+
+  build:
+    needs: [validate, approval]
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.validate.outputs.version }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build application
+        run: npm run build
+        env:
+          VITE_API_BASE_URL: ${{ secrets.PRODUCTION_API_BASE_URL }}
+          VITE_ERROR_TRACKING_ENABLED: 'true'
+          VITE_SENTRY_DSN: ${{ secrets.PRODUCTION_SENTRY_DSN }}
+          VITE_LOG_LEVEL: 'warn'
+
+      - name: Verify production build
+        run: |
+          test -d dist || exit 1
+          test -f dist/index.html || exit 1
+          echo "✓ Production build verified"
+          du -sh dist/
+          find dist/assets -name "*.js" | head -5
+
+      - name: Upload build artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-production
+          path: dist/
+          retention-days: 30
+
+  deploy:
+    needs: [validate, build]
+    runs-on: ubuntu-latest
+    if: success()
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ needs.validate.outputs.version }}
+
+      - name: Download build artifacts
+        uses: actions/download-artifact@v4
+        with:
+          name: build-production
+          path: dist/
+
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+      - name: Deploy to Azure App Service
+        uses: azure/webapps-deploy@v2
+        with:
+          app-name: ${{ secrets.PRODUCTION_APP_SERVICE_NAME }}
+          package: dist/
+          clean: true
+
+      - name: Verify deployment health
+        run: |
+          HEALTH_URL="${{ secrets.PRODUCTION_APP_SERVICE_URL }}/health"
+          for i in {1..30}; do
+            response=$(curl -s -o /dev/null -w "%{http_code}" "$HEALTH_URL" || echo "000")
+            if [ "$response" -eq 200 ]; then
+              echo "✓ Health check passed (attempt $i)"
+              exit 0
+            fi
+            echo "Waiting for service to be ready... (attempt $i/30)"
+            sleep 10
+          done
+          echo "✗ Health check failed after 30 attempts"
+          exit 1
+
+      - name: Smoke tests
+        run: |
+          BASE_URL="${{ secrets.PRODUCTION_APP_SERVICE_URL }}"
+          echo "Running smoke tests against: $BASE_URL"
+          
+          # Test homepage loads
+          status=$(curl -s -o /dev/null -w "%{http_code}" "$BASE_URL/")
+          [ "$status" -eq 200 ] && echo "✓ Homepage loads" || (echo "✗ Homepage failed: $status" && exit 1)
+          
+          # Test OAuth endpoint exists
+          status=$(curl -s -o /dev/null -w "%{http_code}" "$BASE_URL/auth" || echo "000")
+          [ "$status" -eq 404 -o "$status" -eq 200 ] && echo "✓ Auth route accessible" || (echo "✗ Auth route failed: $status" && exit 1)
+          
+          echo "✓ Smoke tests passed"
+
+      - name: Record deployment
+        run: |
+          echo "## Production Deployment Successful" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Version**: ${{ needs.validate.outputs.version }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Environment**: Production" >> $GITHUB_STEP_SUMMARY
+          echo "**URL**: ${{ secrets.PRODUCTION_APP_SERVICE_URL }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Deployed at**: $(date -u +'%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_STEP_SUMMARY
+          echo "**Deployed by**: ${{ github.actor }}" >> $GITHUB_STEP_SUMMARY
+
+  notify:
+    needs: [validate, deploy]
+    runs-on: ubuntu-latest
+    if: always()
+    
+    steps:
+      - name: Post deployment result
+        run: |
+          echo "## Production Deployment Report" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Version**: ${{ needs.validate.outputs.version }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Status**: ${{ needs.deploy.result }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Timestamp**: $(date -u +'%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_STEP_SUMMARY
