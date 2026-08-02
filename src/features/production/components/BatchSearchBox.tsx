@@ -4,7 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { Search, Loader2, AlertCircle, X } from 'lucide-react';
 import batchService from '../services/batchService';
 import { BatchSearchResult } from '../types/batch.types';
-import { useDebounce } from '../../shared/hooks/useDebounce';
+import { useDebounce } from '@/shared/hooks/useDebounce';
 
 interface BatchSearchBoxProps {
   onSelectBatch: (batchId: string) => void;

@@ -1,0 +1,72 @@
+
+> manufacturing-tracking-system@0.1.0 build
+> tsc -b && vite build
+
+src/app/Monitoring.tsx(41,13): error TS6133: 'metrics' is declared but its value is never read.
+src/app/routes.tsx(1,1): error TS6133: 'ReactNode' is declared but its value is never read.
+src/app/routes.tsx(2,1): error TS6133: 'Navigate' is declared but its value is never read.
+src/features/audit/services/auditService.ts(2,23): error TS2307: Cannot find module '../../shared/services/apiClient' or its corresponding type declarations.
+src/features/audit/services/auditService.ts(3,31): error TS2307: Cannot find module '../types/production.types' or its corresponding type declarations.
+src/features/audit/services/auditService.ts(4,37): error TS2307: Cannot find module '../types/production.schema' or its corresponding type declarations.
+src/features/audit/services/auditService.ts(21,29): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/features/audit/services/auditService.ts(38,29): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/features/audit/types/audit.types.ts(2,33): error TS2307: Cannot find module '../types/production.types' or its corresponding type declarations.
+src/features/auth/hooks/useSession.ts(8,11): error TS6133: 'login' is declared but its value is never read.
+src/features/auth/services/authService.ts(2,16): error TS6133: 'UserRole' is declared but its value is never read.
+src/features/auth/services/authService.ts(2,32): error TS2307: Cannot find module '../../shared/types/domain.types' or its corresponding type declarations.
+src/features/auth/services/oauthCallbackService.ts(2,1): error TS6133: 'User' is declared but its value is never read.
+src/features/dashboard/components/BottleneckAlert.tsx(4,36): error TS2307: Cannot find module '../../shared/types/domain.types' or its corresponding type declarations.
+src/features/dashboard/components/DashboardGrid.tsx(6,32): error TS2307: Cannot find module '../../shared/components/LoadingSpinner' or its corresponding type declarations.
+src/features/dashboard/components/MobileStageCard.tsx(4,36): error TS2307: Cannot find module '../features/production/types/production.types' or its corresponding type declarations.
+src/features/dashboard/components/MobileStageCard.tsx(32,18): error TS7053: Element implicitly has an 'any' type because expression of type 'StageStatus' can't be used to index type '{ GREEN: { bg: string; border: string; text: string; icon: LucideIcon; label: string; }; YELLOW: { bg: string; border: string; text: string; icon: LucideIcon; label: string; }; RED: { ...; }; }'.
+src/features/dashboard/components/MobileStageCard.tsx(97,53): error TS7006: Parameter 'batchId' implicitly has an 'any' type.
+src/features/dashboard/components/StageCard.tsx(4,29): error TS2307: Cannot find module '../../shared/components/StatusBadge' or its corresponding type declarations.
+src/features/dashboard/components/StageCard.tsx(5,1): error TS6133: 'formatTime' is declared but its value is never read.
+src/features/dashboard/components/StageCard.tsx(5,28): error TS2307: Cannot find module '../../shared/utils/formatters' or its corresponding type declarations.
+src/features/dashboard/components/StageCard.tsx(6,36): error TS2307: Cannot find module '../../shared/types/domain.types' or its corresponding type declarations.
+src/features/dashboard/types/dashboard.types.ts(2,53): error TS2307: Cannot find module '../../shared/types/domain.types' or its corresponding type declarations.
+src/features/production/components/AuditTrailViewer.tsx(17,3): error TS6133: 'onExport' is declared but its value is never read.
+src/features/production/components/BatchSearchBox.tsx(7,29): error TS2307: Cannot find module '../../shared/hooks/useDebounce' or its corresponding type declarations.
+src/features/production/components/BatchTimeline.tsx(4,1): error TS6133: 'formatTime' is declared but its value is never read.
+src/features/production/components/BatchTimeline.tsx(4,28): error TS2307: Cannot find module '../../shared/utils/formatters' or its corresponding type declarations.
+src/features/production/hooks/productionHooks.ts(4,1): error TS6133: 'DashboardData' is declared but its value is never read.
+src/features/production/services/batchService.ts(2,23): error TS2307: Cannot find module '../../shared/services/apiClient' or its corresponding type declarations.
+src/features/production/services/batchService.ts(7,8): error TS2307: Cannot find module './batch.types' or its corresponding type declarations.
+src/features/production/services/batchService.ts(11,8): error TS2307: Cannot find module './batch.schema' or its corresponding type declarations.
+src/features/production/services/productionService.ts(2,23): error TS2307: Cannot find module '../../shared/services/apiClient' or its corresponding type declarations.
+src/features/production/services/productionService.ts(3,99): error TS6133: 'ManufacturingStage' is declared but its value is never read.
+src/features/production/services/productionService.ts(3,140): error TS2307: Cannot find module './production.types' or its corresponding type declarations.
+src/features/production/services/productionService.ts(4,115): error TS2307: Cannot find module './production.schema' or its corresponding type declarations.
+src/features/production/services/productionService.ts(27,29): error TS7006: Parameter 'b' implicitly has an 'any' type.
+src/features/production/services/productionService.ts(53,29): error TS7006: Parameter 't' implicitly has an 'any' type.
+src/features/production/services/productionService.ts(68,29): error TS7006: Parameter 'e' implicitly has an 'any' type.
+src/features/production/services/productionService.ts(135,29): error TS7006: Parameter 'b' implicitly has an 'any' type.
+src/features/production/services/productionService.ts(150,29): error TS7006: Parameter 'b' implicitly has an 'any' type.
+src/features/production/types/batch.schema.ts(3,36): error TS2307: Cannot find module '../../shared/types/domain.types' or its corresponding type declarations.
+src/features/production/types/batch.types.ts(2,36): error TS2307: Cannot find module '../../shared/types/domain.types' or its corresponding type declarations.
+src/features/production/types/production.types.ts(2,1): error TS6133: 'UserRole' is declared but its value is never read.
+src/features/quality/services/qualityService.ts(2,23): error TS2307: Cannot find module '../../shared/services/apiClient' or its corresponding type declarations.
+src/features/quality/services/qualityService.ts(3,64): error TS2307: Cannot find module '../types/production.types' or its corresponding type declarations.
+src/features/quality/services/qualityService.ts(4,41): error TS2307: Cannot find module '../types/production.schema' or its corresponding type declarations.
+src/features/quality/services/qualityService.ts(5,36): error TS2307: Cannot find module '../types/production.types' or its corresponding type declarations.
+src/features/quality/services/qualityService.ts(25,63): error TS7006: Parameter 'b' implicitly has an 'any' type.
+src/features/reports/services/reportService.ts(2,23): error TS2307: Cannot find module '../../shared/services/apiClient' or its corresponding type declarations.
+src/pages/BatchDetailPage.tsx(12,25): error TS6133: 'BatchStatus' is declared but its value is never read.
+src/pages/BatchDetailPage.tsx(13,43): error TS6133: 'Package' is declared but its value is never read.
+src/pages/DashboardPageMobile.tsx(142,30): error TS2322: Type '{ stage: any; }' is not assignable to type 'IntrinsicAttributes & BottleneckAlertProps'.
+  Property 'stage' does not exist on type 'IntrinsicAttributes & BottleneckAlertProps'.
+src/pages/DashboardPageMobile.tsx(159,28): error TS2322: Type '{ stages: any; }' is not assignable to type 'IntrinsicAttributes & DashboardGridProps'.
+  Property 'stages' does not exist on type 'IntrinsicAttributes & DashboardGridProps'.
+src/pages/LoginPage.tsx(4,1): error TS6133: 'GoogleOAuthButton' is declared but its value is never read.
+src/pages/LoginPage.tsx(15,9): error TS6133: 'googleClientId' is declared but its value is never read.
+src/shared/components/ErrorBoundary.tsx(2,1): error TS6133: 'LoadingSpinner' is declared but its value is never read.
+src/shared/components/ErrorBoundary.tsx(27,3): error TS4114: This member must have an 'override' modifier because it overrides a member in the base class 'Component<ErrorBoundaryProps, ErrorBoundaryState, any>'.
+src/shared/components/ErrorBoundary.tsx(35,3): error TS4114: This member must have an 'override' modifier because it overrides a member in the base class 'Component<ErrorBoundaryProps, ErrorBoundaryState, any>'.
+src/shared/components/Header.tsx(5,1): error TS6133: 'ChevronDown' is declared but its value is never read.
+src/shared/components/Header.tsx(36,13): error TS7030: Not all code paths return a value.
+src/shared/components/OfflineIndicators.tsx(3,10): error TS6133: 'Wifi' is declared but its value is never read.
+src/shared/components/OfflineIndicators.tsx(3,25): error TS6133: 'AlertCircle' is declared but its value is never read.
+src/shared/components/OfflineIndicators.tsx(4,37): error TS2307: Cannot find module '../../hooks/useConnectionStatus' or its corresponding type declarations.
+src/shared/components/OfflineIndicators.tsx(49,9): error TS6133: 'isOnline' is declared but its value is never read.
+src/shared/components/OfflineIndicators.tsx(233,17): error TS6133: 'setItems' is declared but its value is never read.
+src/shared/services/syncService.ts(24,25): error TS2503: Cannot find namespace 'NodeJS'.

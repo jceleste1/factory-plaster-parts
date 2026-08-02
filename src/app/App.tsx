@@ -12,6 +12,12 @@ import { useAuth } from '../features/auth/hooks/useAuth';
 import { UserRole } from '../features/auth/types/auth.types';
 import LoginPage from '../pages/LoginPage';
 
+// T194: Error Tracking setup
+import { ErrorTracking } from './ErrorTracking';
+
+// T195: Monitoring and Logging setup
+import { Monitoring } from './Monitoring';
+
 // Lazy load pages for better performance
 import { lazy, Suspense } from 'react';
 
@@ -38,7 +44,14 @@ const AppContent: React.FC = () => {
   }
 
   return (
-    <Routes>
+    <>
+      {/* T194: Initialize error tracking */}
+      <ErrorTracking />
+      
+      {/* T195: Initialize monitoring and logging */}
+      <Monitoring />
+
+      <Routes>
       {/* Public Routes */}
       <Route path="/auth/login" element={<LoginPage />} />
       <Route path="/auth/callback" element={<LoginPage />} />
@@ -71,6 +84,7 @@ const AppContent: React.FC = () => {
       <Route path="/404" element={<div>Page not found</div>} />
       <Route path="*" element={<Navigate to="/404" replace />} />
     </Routes>
+    </>
   );
 };
 

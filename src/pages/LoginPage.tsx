@@ -1,10 +1,10 @@
 // T052: Create LoginPage
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import AuthLayout from '../../layouts/AuthLayout';
-import { GoogleOAuthButton } from '../components/GoogleOAuthButton';
-import { useAuth } from '../hooks/useAuth';
+import { GoogleOAuthButton } from '../features/auth/components/GoogleOAuthButton';
+import { useAuth } from '../features/auth/hooks/useAuth';
 import { GoogleLogin, CredentialResponse } from '@react-oauth/google';
+import { AuthLayout } from '@/layouts/AuthLayout';
 
 export const LoginPage: React.FC = () => {
   const navigate = useNavigate();
@@ -16,6 +16,8 @@ export const LoginPage: React.FC = () => {
 
   // Redirect if already authenticated
   useEffect(() => {
+
+    console.log( 'LoginPage: isAuthenticated:', isAuthenticated, 'isLoading:', isLoading);
     if (isAuthenticated && !isLoading) {
       navigate('/dashboard', { replace: true });
     }

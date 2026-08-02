@@ -3,7 +3,7 @@ import React from 'react';
 import { StageCard } from './StageCard';
 import { ProductionVelocity } from './ProductionVelocity';
 import { BottleneckAlert } from './BottleneckAlert';
-import { LoadingSpinner } from '../../shared/components/LoadingSpinner';
+import { LoadingSpinner } from '@/shared/components/LoadingSpinner';
 import { DashboardResponse } from '../types/dashboard.types';
 import { RefreshCw } from 'lucide-react';
 
@@ -115,4 +115,4 @@ export const DashboardGrid: React.FC<DashboardGridProps> = React.memo(({
       </div>
     </div>
   );
-};
+});

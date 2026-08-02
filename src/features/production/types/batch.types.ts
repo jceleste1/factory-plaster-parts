@@ -1,5 +1,5 @@
 // T075: Create batch types for traceability
-import { ManufacturingStage } from '../../shared/types/domain.types';
+import { ManufacturingStage } from '@/shared/types/domain.types';
 
 export enum BatchStatus {
   PLANNING = 'PLANNING',

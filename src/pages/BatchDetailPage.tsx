@@ -1,7 +1,7 @@
 // T082 + T084: Create BatchDetailPage
 import React, { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import AppLayout from '../layouts/AppLayout';
+import { AppLayout } from '../layouts/AppLayout';
 import { BatchSearchBox } from '../features/production/components/BatchSearchBox';
 import { BatchTimeline } from '../features/production/components/BatchTimeline';
 import { AuditTrailViewer } from '../features/production/components/AuditTrailViewer';

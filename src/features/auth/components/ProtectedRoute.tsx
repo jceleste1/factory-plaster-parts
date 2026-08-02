@@ -3,7 +3,7 @@ import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
 import { UserRole } from '../types/auth.types';
-import { LoadingSpinner } from '../../shared/components/LoadingSpinner';
+import { LoadingSpinner } from '@/shared/components/LoadingSpinner';
 
 interface ProtectedRouteProps {
   children: React.ReactNode;

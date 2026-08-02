@@ -1,14 +1,14 @@
 // T077: Create batch service with API calls
-import apiClient from '../../shared/services/apiClient';
+import apiClient from '@/shared/services/apiClient';
 import {
   BatchDetail,
   BatchSearchResult,
   AuditLogEntry,
-} from './batch.types';
+} from '../types/batch.types';
 import {
   batchDetailSchema,
   auditLogEntrySchema,
-} from './batch.schema';
+} from '../types/batch.schema';
 
 class BatchService {
   async fetchBatchDetail(batchId: string): Promise<BatchDetail> {

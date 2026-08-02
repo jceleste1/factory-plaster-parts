@@ -1,9 +1,9 @@
 // T065: Create StageCard component - T072/T073: Responsive + Accessible
 import React from 'react';
 import { Stage } from '../types/dashboard.types';
-import { StatusBadge } from '../../shared/components/StatusBadge';
-import { formatTime } from '../../shared/utils/formatters';
-import { ManufacturingStage } from '../../shared/types/domain.types';
+import { StatusBadge } from '@/shared/components/StatusBadge';
+import { formatTime } from '@/shared/utils/formatters';
+import { ManufacturingStage } from '@/shared/types/domain.types';
 
 interface StageCardProps {
   stage: Stage;

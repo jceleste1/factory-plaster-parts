@@ -25,7 +25,6 @@
         "argsIgnorePattern": "^_"
       }
     ],
-    "@typescript-eslint/explicit-function-return-types": "warn",
     "@typescript-eslint/no-explicit-any": "error"
   }
 }

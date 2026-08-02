@@ -1,6 +1,6 @@
 // T076: Create batch Zod schemas
 import { z } from 'zod';
-import { ManufacturingStage } from '../../shared/types/domain.types';
+import { ManufacturingStage } from '@/shared/types/domain.types';
 
 export const batchStatusSchema = z.enum(['PLANNING', 'IN_PROGRESS', 'COMPLETED', 'ON_HOLD', 'CANCELLED']);
 export const qualityResultSchema = z.enum(['PASSED', 'FAILED', 'CONDITIONAL']);

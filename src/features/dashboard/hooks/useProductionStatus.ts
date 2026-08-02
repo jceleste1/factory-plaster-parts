@@ -1,9 +1,14 @@
 // T063: Create useProductionStatus hook for dashboard data fetching - T071/T074: Polling + Performance
-import { useQuery, UseQueryResult } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import dashboardService from '../services/dashboardService';
 import { DashboardResponse } from '../types/dashboard.types';
 
-interface UseProductionStatusReturn extends UseQueryResult<DashboardResponse, Error> {
+interface UseProductionStatusReturn {
+  data: DashboardResponse | undefined;
+  isLoading: boolean;
+  isFetching: boolean;
+  error: Error | null;
+  refetch: () => void;
   isStale: boolean;
   isRefreshNeeded: boolean;
 }

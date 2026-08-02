@@ -12,8 +12,9 @@ export interface User {
   google_email: string;
   full_name: string;
   role: UserRole;
-  assigned_stage: string;
+  assigned_stage?: string;
   last_login_at?: string;
+  avatar?: string;
 }
 
 export interface AuthResponse {

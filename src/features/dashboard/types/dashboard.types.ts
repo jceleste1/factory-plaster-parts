@@ -1,5 +1,5 @@
 // T060: Create production types for dashboard
-import { ManufacturingStage, StatusIndicator } from '../../shared/types/domain.types';
+import { ManufacturingStage, StatusIndicator } from '@/shared/types/domain.types';
 
 export interface Stage {
   stage_name: ManufacturingStage;

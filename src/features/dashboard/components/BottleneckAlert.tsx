@@ -1,7 +1,7 @@
 // T067: Create BottleneckAlert component - T072/T073/T074: Responsive + Accessible + Performance
 import React, { useState, useCallback } from 'react';
 import { AlertTriangle, X } from 'lucide-react';
-import { ManufacturingStage } from '../../shared/types/domain.types';
+import { ManufacturingStage } from '@/shared/types/domain.types';
 
 interface BottleneckAlertProps {
   bottleneckStage?: ManufacturingStage;

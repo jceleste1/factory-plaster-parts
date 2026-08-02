@@ -1,7 +1,6 @@
 // T061: Create dashboard Zod schema for API response validation
+import { ManufacturingStage, StatusIndicator } from '@/shared/types/domain.types';
 import { z } from 'zod';
-import { ManufacturingStage, StatusIndicator } from '../../shared/types/domain.types';
-
 export const stageSchema = z.object({
   stage_name: z.nativeEnum(ManufacturingStage),
   batch_count: z.number().int().min(0),

@@ -1,7 +1,7 @@
 // T080: Create BatchTimeline component
 import React, { useState } from 'react';
 import { StageTransition } from '../types/batch.types';
-import { formatTime } from '../../shared/utils/formatters';
+import { formatTime } from '@/shared/utils/formatters';
 import { ChevronDown, Clock, User, CheckCircle, Circle } from 'lucide-react';
 
 interface BatchTimelineProps {
