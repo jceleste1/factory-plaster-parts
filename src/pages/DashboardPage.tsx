@@ -115,15 +115,7 @@ export const DashboardPage: React.FC = () => {
           </div>
         )}
 
-        {/* Info Box - T073: Better accessibility with semantic HTML */}
-        <div className="bg-blue-50 border border-blue-200 rounded-lg p-4 sm:p-6 mt-6 sm:mt-8 focus-within:ring-2 focus-within:ring-blue-500">
-          <h3 className="font-semibold text-blue-900 mb-2 text-sm sm:text-base">✅ Phase 3 Complete: Authentication</h3>
-          <p className="text-blue-800 text-xs sm:text-sm">
-            User authentication via Google OAuth2 is now complete. Phase 4 has been enhanced with real-time production dashboard, 
-            optimized performance (React.memo components), full responsive design (mobile-first), and comprehensive accessibility features. 
-            The dashboard updates automatically every 30 seconds with live batch tracking data from the manufacturing stages.
-          </p>
-        </div>
+
       </div>
     </AppLayout>
   );
