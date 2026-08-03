@@ -5,12 +5,15 @@ import { GoogleOAuthButton } from '../features/auth/components/GoogleOAuthButton
 import { useAuth } from '../features/auth/hooks/useAuth';
 import { GoogleLogin, CredentialResponse } from '@react-oauth/google';
 import { AuthLayout } from '@/layouts/AuthLayout';
+import authService from '@/features/auth/services/authService';
+import { UserRole } from '@/shared/types/domain.types';
 
 export const LoginPage: React.FC = () => {
   const navigate = useNavigate();
   const { isAuthenticated, isLoading, login, error } = useAuth();
   const [localError, setLocalError] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [demoRole, setDemoRole] = useState<UserRole>(UserRole.QUALITY_CONTROLLER);
 
   const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || '';
 
@@ -43,6 +46,23 @@ export const LoginPage: React.FC = () => {
 
   const handleGoogleError = () => {
     setLocalError('Google login failed. Please try again.');
+  };
+
+  const handleDemoLogin = async () => {
+    try {
+      setIsSubmitting(true);
+      setLocalError(null);
+
+      // Create demo user and store in localStorage
+      authService.createDemoLogin(demoRole);
+      
+      // Redirect to dashboard
+      navigate('/dashboard', { replace: true });
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Demo login failed. Please try again.';
+      setLocalError(errorMessage);
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -91,6 +111,47 @@ export const LoginPage: React.FC = () => {
               <div className="animate-spin rounded-full h-4 w-4 border border-gray-300 border-t-gray-900"></div>
               <span>Signing in...</span>
             </div>
+          )}
+
+          {/* Demo Login Section - Development Only */}
+          {!import.meta.env.PROD && (
+            <>
+              <div className="relative">
+                <div className="absolute inset-0 flex items-center">
+                  <div className="w-full border-t border-gray-300"></div>
+                </div>
+                <div className="relative flex justify-center text-xs uppercase">
+                  <span className="px-2 bg-white text-gray-500">Development Only</span>
+                </div>
+              </div>
+
+              <div className="space-y-3">
+                <label className="block text-sm font-medium text-gray-700">Demo Login - Test Different Roles</label>
+                <select
+                  value={demoRole}
+                  onChange={(e) => setDemoRole(e.target.value as UserRole)}
+                  className="w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                  disabled={isSubmitting}
+                >
+                  <option value={UserRole.QUALITY_CONTROLLER}>🔍 QC Inspector (QUALITY_CONTROLLER)</option>
+                  <option value={UserRole.MANAGER}>📊 Manager (MANAGER)</option>
+                  <option value={UserRole.WORKER}>👷 Worker (WORKER)</option>
+                  <option value={UserRole.ADMIN}>⚙️ Admin (ADMIN)</option>
+                </select>
+
+                <button
+                  onClick={handleDemoLogin}
+                  disabled={isSubmitting}
+                  className="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white font-medium rounded-lg transition-colors"
+                >
+                  {isSubmitting ? 'Signing in...' : '🚀 Demo Login'}
+                </button>
+
+                <p className="text-xs text-gray-500 text-center">
+                  Demo login is only available in development mode and stores mock user data locally.
+                </p>
+              </div>
+            </>
           )}
 
           {/* Loading State */}

@@ -1,8 +1,7 @@
 // T122: Quality Control Service
 import apiClient from '@/shared/services/apiClient';
-import { QualityInspection, QualityResult, DefectRecord } from '@/features/production/types/production.types';
-import { qualityInspectionSchema } from '@/features/production/types/production.schema';
-import { Batch, batchSchema } from '@/features/production/types/production.types';
+import { QualityInspection, QualityResult, DefectRecord, Batch } from '@/features/production/types/production.types';
+import { qualityInspectionSchema, batchSchema } from '@/features/production/types/production.schema';
 
 interface QualityInspectionRequest {
   result: QualityResult;
@@ -84,6 +83,36 @@ class QualityService {
     } catch (error) {
       return null;
     }
+  }
+
+  // Upload defect photo
+  async uploadDefectPhoto(batch_id: string, photoFile: File): Promise<{ photo_url: string }> {
+    try {
+      const formData = new FormData();
+      formData.append('photo', photoFile);
+      formData.append('batch_id', batch_id);
+
+      const response = await apiClient.post<{ photo_url: string }>(
+        `/batches/${batch_id}/defect-photo`,
+        formData,
+        {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      if (error instanceof Error) {
+        throw new Error(`Failed to upload defect photo: ${error.message}`);
+      }
+      throw error;
+    }
+  }
+
+  // Alias for getDefectCodes with original method name
+  async getQualityDefectCodes(): Promise<DefectCode[]> {
+    return this.getDefectCodes();
   }
 }
 

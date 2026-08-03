@@ -952,30 +952,30 @@
 
 ### Implementation Tasks for US6
 
-- [ ] T120 [P] Create quality types in src/features/quality/types/quality.types.ts:
+- [x] T120 [P] Create quality types in src/features/quality/types/quality.types.ts:
   - QualityInspection interface: { inspection_id, batch_id, result, defect_count, defect_details[], approval_timestamp }
   - DefectRecord interface: { defect_id, defect_type, location, quantity, severity, photo_url }
   - DefectType enum: SurfaceDefects | DimensionalOOT | StructuralFailure | ColorIssue | Contamination | Other
   - QualityResult enum: PASS | FAIL | CONDITIONAL
 
-- [ ] T121 [P] Create quality Zod schema in src/features/quality/types/quality.schema.ts:
+- [x] T121 [P] Create quality Zod schema in src/features/quality/types/quality.schema.ts:
   - qualityInspectionSchema validates inspection form submission
   - defectRecordSchema validates defect details
   - Runtime validation for reason codes
 
-- [ ] T122 [P] Create quality service in src/features/quality/services/qualityService.ts:
+- [x] T122 [P] Create quality service in src/features/quality/services/qualityService.ts:
   - getBatchesInQuality() - GET /batches/quality-queue returns batches awaiting inspection
   - submitQualityInspection(batch_id, result, defects) - POST /batches/{batch_id}/quality-inspection
   - getQualityDefectCodes() - GET /reference/defect-codes returns standardized codes
   - Error handling: 409 (batch already inspected), 403 (user not QC role)
 
-- [ ] T123 [P] Create useQualityInspection hook in src/features/quality/hooks/useQualityInspection.ts:
+- [x] T123 [P] Create useQualityInspection hook in src/features/quality/hooks/useQualityInspection.ts:
   - Calls qualityService.submitQualityInspection()
   - Handles form validation via Zod
   - Optimistic update: batch removed from queue on submit
   - Returns { mutate, isLoading, error }
 
-- [ ] T124 [P] Create QualityInspectionForm component in src/features/quality/components/QualityInspectionForm.tsx:
+- [x] T124 [P] Create QualityInspectionForm component in src/features/quality/components/QualityInspectionForm.tsx:
   - Props: batch (Batch object), onSuccess (callback)
   - Form fields:
     - Read-only batch ID, material type, previous stage completion time
@@ -988,7 +988,7 @@
   - Cancel button to close form
   - Loading spinner while submitting
 
-- [ ] T125 [P] Create DefectRecorder component in src/features/quality/components/DefectRecorder.tsx:
+- [x] T125 [P] Create DefectRecorder component in src/features/quality/components/DefectRecorder.tsx:
   - Props: onDefectsChange (callback)
   - Add defect button opens dialog/form
   - Defect form fields:
@@ -1002,7 +1002,7 @@
   - Validation: at least 1 defect required if FAIL result
   - Accessible form with ARIA labels
 
-- [ ] T126 [P] Create ApprovalWorkflow component in src/features/quality/components/ApprovalWorkflow.tsx:
+- [x] T126 [P] Create ApprovalWorkflow component in src/features/quality/components/ApprovalWorkflow.tsx:
   - Props: batch (Batch object), result (QualityResult), onSubmit (callback)
   - Displays workflow confirmation:
     - If PASS: "Batch approved. Will move to Packaging stage."
@@ -1014,7 +1014,7 @@
   - Submit and Cancel buttons
   - Accessible: role="dialog" if modal, semantic form structure
 
-- [ ] T127 Create QualityInspectionPage in src/pages/QualityInspectionPage.tsx:
+- [x] T127 Create QualityInspectionPage in src/pages/QualityInspectionPage.tsx:
   - Route: /quality (or /quality-inspections)
   - Shows list of batches waiting in Quality stage
   - Calls useQualityQueue hook
@@ -1032,55 +1032,55 @@
   - Breadcrumb: Dashboard → Quality Inspections
   - WCAG 2.1 AA: semantic table or list, keyboard nav
 
-- [ ] T128 [P] Create useQualityQueue hook in src/features/quality/hooks/useQualityQueue.ts:
+- [x] T128 [P] Create useQualityQueue hook in src/features/quality/hooks/useQualityQueue.ts:
   - Fetches batches in quality stage via getBatchesInQuality()
   - Uses TanStack Query with staleTime 10000ms
   - Returns { batches, isLoading, error, refetch }
 
-- [ ] T129 [P] Create DefectCodeSelector component in src/shared/components/DefectCodeSelector.tsx:
+- [x] T129 [P] Create DefectCodeSelector component in src/shared/components/DefectCodeSelector.tsx:
   - Dropdown or multi-select showing standardized defect reason codes
   - Options: Surface Defects, Dimensional Out-of-Tolerance, Structural Failure, Color Issue, Contamination, Other
   - Maps to enum values for API submission
   - Keyboard accessible
 
-- [ ] T130 Add rejection reason codes:
+- [x] T130 Add rejection reason codes:
   - Create constant file src/shared/utils/qualityReasons.ts
   - Export array of rejection codes: [{ code, label, description }]
   - Used in DefectCodeSelector and ApprovalWorkflow
 
-- [ ] T131 [P] Create time-in-quality indicator component:
+- [x] T131 [P] Create time-in-quality indicator component:
   - Shows elapsed time batch has been waiting in Quality
   - Flags as alert if >24 hours
   - Used in batch list and form
   - Updates every 10 seconds (real-time display)
 
-- [ ] T132 Implement workflow routing after approval:
+- [x] T132 Implement workflow routing after approval:
   - PASS: batch automatically moves to Packaging
   - FAIL: batch returned to Finishing stage (with rework note)
   - CONDITIONAL: batch routed to designated rework queue/stage
   - Audit log records routing decision
 
-- [ ] T133 Add photo upload to defect recording (optional):
+- [x] T133 Add photo upload to defect recording (optional):
   - File input for image upload (PNG, JPG, WebP)
   - Preview thumbnail after selection
   - Compress image before upload (reduce size)
   - Upload via multipart form data
   - Store photo URL with defect record
 
-- [ ] T134 Optimize quality workflow for speed:
+- [x] T134 Optimize quality workflow for speed:
   - Minimize form inputs (pre-fill where possible)
   - Clear/hide irrelevant fields based on result selection
   - Target ≤3 min per batch inspection
   - Lazy-load defect codes on form open
 
-- [ ] T135 Add mobile responsiveness to quality:
+- [x] T135 Add mobile responsiveness to quality:
   - Test on 320px, 375px, 768px
   - Batch list single-column on mobile
   - Form modal stacks vertically, scrollable if needed
   - Buttons 44px+ touch targets
   - Photo upload from camera on mobile devices
 
-- [ ] T136 Add accessibility to quality workflow:
+- [x] T136 Add accessibility to quality workflow:
   - Semantic form structure (fieldset, legend for radio groups)
   - Color + icon/text for result indicators (not color-only)
   - ARIA labels on all form fields

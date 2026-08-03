@@ -37,6 +37,10 @@ const ReportsPage = lazy(() =>
   import('../pages/ReportsPage').then(m => ({ default: m.ReportsPage }))
 );
 
+const QualityInspectionPage = lazy(() =>
+  import('../pages/QualityInspectionPage').then(m => ({ default: m.QualityInspectionPage }))
+);
+
 const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || '';
 
 // Main app content with routing
@@ -104,6 +108,17 @@ const AppContent: React.FC = () => {
           <ProtectedRoute requiredRoles={[UserRole.WORKER, UserRole.SUPERVISOR, UserRole.MANAGER, UserRole.ADMIN]}>
             <Suspense fallback={<LoadingSpinner text="Loading reports..." />}>
               <ReportsPage />
+            </Suspense>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/quality"
+        element={
+          <ProtectedRoute requiredRoles={[UserRole.QUALITY_CONTROLLER, UserRole.MANAGER, UserRole.ADMIN]}>
+            <Suspense fallback={<LoadingSpinner text="Loading quality inspections..." />}>
+              <QualityInspectionPage />
             </Suspense>
           </ProtectedRoute>
         }

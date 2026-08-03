@@ -60,6 +60,32 @@ class AuthService {
     }
   }
 
+  // Development-only: Create demo login for testing without Google OAuth
+  createDemoLogin(role: UserRole): User {
+    if (import.meta.env.PROD) {
+      throw new Error('Demo login is not available in production');
+    }
+
+    const demoUser: User = {
+      user_id: `demo-${role.toLowerCase()}-${Date.now()}`,
+      google_email: `demo-${role.toLowerCase()}@factory.local`,
+      full_name: `Demo ${role} User`,
+      role: role,
+      last_login_at: new Date(),
+    };
+
+    // Create fake JWT token for demo
+    const fakeHeader = btoa(JSON.stringify({ alg: 'none', typ: 'JWT' }));
+    const fakePayload = btoa(JSON.stringify(demoUser));
+    const fakeToken = `${fakeHeader}.${fakePayload}.`;
+
+    // Store in localStorage
+    localStorage.setItem('auth_token', fakeToken);
+    localStorage.setItem('user', JSON.stringify(demoUser));
+
+    return demoUser;
+  }
+
   async getCurrentUser(): Promise<User | null> {
     try {
       const userJson = localStorage.getItem('user');
