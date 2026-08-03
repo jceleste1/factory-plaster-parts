@@ -1,7 +1,8 @@
 // T069: Create DashboardPage with real-time production data - T070/T072/T073/T074 enhanced
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { AppLayout } from '../layouts/AppLayout';
 import { LoadingSpinner } from '../shared/components/LoadingSpinner';
+import { DashboardGrid } from '../features/dashboard/components/DashboardGrid';
 import { useAuth } from '../features/auth/hooks/useAuth';
 import { useProductionStatus } from '../features/dashboard/hooks/useProductionStatus';
 import { useDashboardRefresh } from '../features/dashboard/hooks/useDashboardRefresh';
@@ -92,21 +93,18 @@ export const DashboardPage: React.FC = () => {
           </div>
         )}
 
-        {/* Dashboard Content - T074: Performance optimized with React.memo components
-       
+        {/* Dashboard Content - T074: Performance optimized with React.memo components */}
         {data && (
           <DashboardGrid
             data={data}
-            isLoading={isLoading || isFetching}
+            isLoading={isLoading}
             onRefresh={refresh}
-            isRefreshing={isRefreshing}
             onStageClick={(stage) => {
               // TODO: Navigate to stage details page in future phase
               console.log('Stage clicked:', stage);
             }}
           />
         )}
-        */}
 
         {/* Loading State - T072: Responsive spinner */}
         {isLoading && !data && (
