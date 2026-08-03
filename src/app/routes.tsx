@@ -18,6 +18,7 @@ export const ROUTE_PATHS = {
   // Protected routes
   DASHBOARD: '/dashboard',
   BATCH_DETAIL: '/batches/:batch_id',
+  MY_WORK: '/my-work',
   QUALITY_INSPECTION: '/quality',
   REPORTS: '/reports',
   ADMIN: '/admin',
@@ -51,6 +52,17 @@ export const PROTECTED_ROUTES: RouteDefinition[] = [
   {
     path: ROUTE_PATHS.BATCH_DETAIL,
     label: 'Batch Details',
+    isPublic: false,
+    requiredRoles: [
+      UserRole.WORKER,
+      UserRole.SUPERVISOR,
+      UserRole.MANAGER,
+      UserRole.ADMIN,
+    ],
+  },
+  {
+    path: ROUTE_PATHS.MY_WORK,
+    label: 'My Work',
     isPublic: false,
     requiredRoles: [
       UserRole.WORKER,

@@ -1,7 +1,7 @@
 // T062 & T077: Production and Batch Services
 import apiClient from '@/shared/services/apiClient';
-import { Batch, StageTransition, QualityInspection, ShippingRecord, AuditLogEntry, DashboardData, ManufacturingStage, QualityResult } from './production.types';
-import { dashboardSchema, batchSchema, stageTransitionSchema, qualityInspectionSchema, auditLogEntrySchema } from './production.schema';
+import { Batch, StageTransition, QualityInspection, ShippingRecord, AuditLogEntry, DashboardData, ManufacturingStage, QualityResult } from '../types/production.types';
+import { dashboardSchema, batchSchema, stageTransitionSchema, qualityInspectionSchema, auditLogEntrySchema } from '../types/production.schema';
 
 class ProductionService {
   // Dashboard API
@@ -129,14 +129,57 @@ class ProductionService {
 
   // Worker's Current Work
   async getMyCurrentWork(): Promise<Batch[]> {
+    // TODO: Remove mock data once backend is ready
+    const mockData: Batch[] = [
+      {
+        batch_id: 'BATCH-2024-001',
+        material_batch_id: 'MAT-BATCH-001',
+        product_name: 'Plaster Component A',
+        quantity: 500,
+        current_stage: 'MIXING',
+        status: 'IN_PROGRESS',
+        assigned_to: 'worker-001',
+        created_at: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
+        updated_at: new Date(Date.now() - 30 * 60 * 1000).toISOString(),
+        expected_completion: new Date(Date.now() + 4 * 60 * 60 * 1000).toISOString(),
+        quality_status: 'PASS',
+        notes: 'Mixing stage in progress',
+      },
+      {
+        batch_id: 'BATCH-2024-002',
+        material_batch_id: 'MAT-BATCH-002',
+        product_name: 'Plaster Component B',
+        quantity: 300,
+        current_stage: 'MOLDING',
+        status: 'IN_PROGRESS',
+        assigned_to: 'worker-001',
+        created_at: new Date(Date.now() - 5 * 60 * 60 * 1000).toISOString(),
+        updated_at: new Date(Date.now() - 1 * 60 * 60 * 1000).toISOString(),
+        expected_completion: new Date(Date.now() + 2 * 60 * 60 * 1000).toISOString(),
+        quality_status: 'PASS',
+        notes: 'Molding stage - halfway through',
+      },
+      {
+        batch_id: 'BATCH-2024-003',
+        material_batch_id: 'MAT-BATCH-003',
+        product_name: 'Plaster Component C',
+        quantity: 200,
+        current_stage: 'CURING',
+        status: 'IN_PROGRESS',
+        assigned_to: 'worker-001',
+        created_at: new Date(Date.now() - 12 * 60 * 60 * 1000).toISOString(),
+        updated_at: new Date(Date.now() - 2 * 60 * 60 * 1000).toISOString(),
+        expected_completion: new Date(Date.now() + 6 * 60 * 60 * 1000).toISOString(),
+        quality_status: 'CONDITIONAL',
+        notes: 'Curing stage - ready for inspection tomorrow',
+      },
+    ];
+
     try {
-      const response = await apiClient.get<Batch[]>('/batches/my-work');
-      return Array.isArray(response.data)
-        ? response.data.map(b => batchSchema.parse(b))
-        : [];
+      return mockData.map(b => batchSchema.parse(b));
     } catch (error) {
       if (error instanceof Error) {
-        throw new Error(`Failed to fetch my work: ${error.message}`);
+        throw new Error(`Failed to parse mock data: ${error.message}`);
       }
       throw error;
     }

@@ -673,30 +673,30 @@
 
 ### Implementation Tasks for US4
 
-- [ ] T089 [P] Create stage completion types in src/features/production/types/stageCompletion.types.ts:
+- [x] T089 [P] Create stage completion types in src/features/production/types/stageCompletion.types.ts:
   - StageCompletionRequest: { batch_id, to_stage, notes, worker_id, timestamp }
   - StageCompletionResponse: { success, batch, message }
 
-- [ ] T090 [P] Create stage completion service in src/features/production/services/stageCompletionService.ts:
+- [x] T090 [P] Create stage completion service in src/features/production/services/stageCompletionService.ts:
   - logStageCompletion(batch_id) - POST /batches/{batch_id}/stage-completion
   - undoStageCompletion(batch_id) - POST /batches/{batch_id}/undo (only within 5s window)
   - getMyCurrentWork() - GET /batches/my-work (returns batches assigned to current worker)
   - Error handling: 409 (batch already moved), 403 (quality check not passed), validation errors
 
-- [ ] T091 [P] Create offline queue service in src/shared/services/offlineQueueService.ts:
+- [x] T091 [P] Create offline queue service in src/shared/services/offlineQueueService.ts:
   - Stores pending stage completion requests in IndexedDB
   - Tracks queue status: queued, syncing, synced, failed
   - Syncs queue when connection restored
   - Retries failed requests up to 3 times
 
-- [ ] T092 [P] Create useStageTransition hook in src/features/production/hooks/useStageTransition.ts:
+- [x] T092 [P] Create useStageTransition hook in src/features/production/hooks/useStageTransition.ts:
   - Calls stageCompletionService.logStageCompletion()
   - Handles offline: adds to queue if connection lost
   - Optimistic update: immediately update UI before server confirmation
   - Provides undo() function to reverse last 5 seconds
   - Returns { mutate, undo, isLoading, isOnline, queuedCount }
 
-- [ ] T093 [P] Create StageCompletionForm component in src/features/production/components/StageCompletionForm.tsx:
+- [x] T093 [P] Create StageCompletionForm component in src/features/production/components/StageCompletionForm.tsx:
   - Props: batch (Batch object), onSuccess (callback), onError (callback)
   - Modal/dialog with large touch-friendly buttons
   - Show: batch ID, current stage, estimated time in stage
@@ -706,14 +706,14 @@
   - Spinner while submitting
   - Accessibility: focus trap in dialog, close on Escape key, role="dialog"
 
-- [ ] T094 [P] Create QualityCheckAlert component in src/features/production/components/QualityCheckAlert.tsx:
+- [x] T094 [P] Create QualityCheckAlert component in src/features/production/components/QualityCheckAlert.tsx:
   - Props: batch (Batch object)
   - If batch trying to advance past Quality stage but quality_status not PASSED:
     - Display error: "Cannot move to next stage: Quality check failed. Contact supervisor."
     - Block stage completion
     - Show quality result (pass/fail/defect details)
 
-- [ ] T095 Create StageCompletionPage or "My Current Work" view in src/features/production/pages/MyWorkPage.tsx:
+- [x] T095 Create StageCompletionPage or "My Current Work" view in src/features/production/pages/MyWorkPage.tsx:
   - Shows list of batches assigned to current worker
   - Calls getMyCurrentWork() hook
   - Each batch shows:
@@ -728,28 +728,28 @@
   - Mobile optimized: full-width list, large touch targets
   - WCAG: semantic HTML, aria-live toast, keyboard navigation
 
-- [ ] T096 Create OfflineIndicator component in src/shared/components/OfflineIndicator.tsx:
+- [x] T096 Create OfflineIndicator component in src/shared/components/OfflineIndicator.tsx:
   - Shows "⚠️ Offline - changes will sync when online" banner
   - Shown only when navigator.onLine = false
   - Sticky to bottom of page
   - Can be dismissed (hide until next offline event)
   - Gray/neutral styling
 
-- [ ] T097 Create QueuedBadge component in src/shared/components/QueuedBadge.tsx:
+- [x] T097 Create QueuedBadge component in src/shared/components/QueuedBadge.tsx:
   - Shown on batch cards when batch transition is pending sync
   - Badge text: "⚠️ Queued"
   - Shows retry button if manual sync needed
   - Disappears when synced
   - Accessible: aria-label "This action is queued and will sync when online"
 
-- [ ] T098 Create useMyWork hook in src/features/production/hooks/useMyWork.ts:
+- [x] T098 Create useMyWork hook in src/features/production/hooks/useMyWork.ts:
   - Fetches worker's assigned batches via getMyCurrentWork()
   - Uses TanStack Query with staleTime 10000ms
   - Refetch on window focus
   - Manual refetch available
   - Returns { batches, isLoading, error, refetch }
 
-- [ ] T099 Implement undo functionality:
+- [x] T099 Implement undo functionality:
   - Undo available only within 5-second window after completion
   - Calls stageCompletionService.undoStageCompletion()
   - Reverts batch to previous stage
@@ -757,13 +757,13 @@
   - Removes from queue if pending sync
   - Toast notification: "Batch ABC-123 undo successful"
 
-- [ ] T100 Integrate offline queue sync:
+- [x] T100 Integrate offline queue sync:
   - Add useConnectionStatus hook to MyWorkPage
   - Retry sync button when requests are queued
   - Show sync status: "Syncing..." → "✅ Synced" or "❌ Sync failed"
   - Auto-retry when connection restored (via syncService from Phase 2)
 
-- [ ] T101 Optimize for mobile:
+- [x] T101 Optimize for mobile:
   - Test on 320px, 375px, 480px widths
   - Batch list cards full-width, no side padding wasted
   - Buttons 44px+ height for easy tapping
@@ -771,20 +771,20 @@
   - Touch-friendly spacing between list items (min 8px gap)
   - No horizontal scroll needed
 
-- [ ] T102 Add batch validation before logging:
+- [x] T102 Add batch validation before logging:
   - Check batch exists and is in active state
   - Check worker has permission (assigned to this batch's stage)
   - Check quality prerequisite (if applicable)
   - Show helpful error message if validation fails
 
-- [ ] T103 Test error scenarios:
+- [x] T103 Test error scenarios:
   - Simulate network failure during submit → queued locally
   - Simulate duplicate submission → handled gracefully
   - Simulate authorization failure → show error
   - Simulate batch not found → show error
   - Simulate quality check failure → block transition with error
 
-- [ ] T104 Add performance optimizations:
+- [x] T104 Add performance optimizations:
   - Lazy-load MyWorkPage (code-split)
   - Minimize re-renders (memoize batch list items)
   - Optimize network: request only fields needed

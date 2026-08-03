@@ -29,6 +29,14 @@ const BatchDetailPage = lazy(() =>
   import('../pages/BatchDetailPage').then(m => ({ default: m.BatchDetailPage }))
 );
 
+const MyWorkPage = lazy(() =>
+  import('../features/production/pages/MyWorkPage').then(m => ({ default: m.MyWorkPage }))
+);
+
+const ReportsPage = lazy(() =>
+  import('../pages/ReportsPage').then(m => ({ default: m.ReportsPage }))
+);
+
 const googleClientId = import.meta.env.VITE_GOOGLE_CLIENT_ID || '';
 
 // Main app content with routing
@@ -74,6 +82,28 @@ const AppContent: React.FC = () => {
           <ProtectedRoute requiredRoles={[UserRole.SUPERVISOR, UserRole.MANAGER, UserRole.ADMIN]}>
             <Suspense fallback={<LoadingSpinner text="Loading batch details..." />}>
               <BatchDetailPage />
+            </Suspense>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/my-work"
+        element={
+          <ProtectedRoute requiredRoles={[UserRole.WORKER, UserRole.SUPERVISOR, UserRole.MANAGER, UserRole.ADMIN]}>
+            <Suspense fallback={<LoadingSpinner text="Loading your work..." />}>
+              <MyWorkPage />
+            </Suspense>
+          </ProtectedRoute>
+        }
+      />
+
+      <Route
+        path="/reports"
+        element={
+          <ProtectedRoute requiredRoles={[UserRole.WORKER, UserRole.SUPERVISOR, UserRole.MANAGER, UserRole.ADMIN]}>
+            <Suspense fallback={<LoadingSpinner text="Loading reports..." />}>
+              <ReportsPage />
             </Suspense>
           </ProtectedRoute>
         }
