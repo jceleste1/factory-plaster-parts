@@ -3,6 +3,7 @@ import React, { useMemo, useState } from 'react';
 import { AppLayout } from '../layouts/AppLayout';
 import { LoadingSpinner } from '../shared/components/LoadingSpinner';
 import { DashboardGrid } from '../features/dashboard/components/DashboardGrid';
+import { BatchSearchBox } from '../features/production/components/BatchSearchBox';
 import { useAuth } from '../features/auth/hooks/useAuth';
 import { useProductionStatus } from '../features/dashboard/hooks/useProductionStatus';
 import { useDashboardRefresh } from '../features/dashboard/hooks/useDashboardRefresh';
@@ -74,6 +75,12 @@ export const DashboardPage: React.FC = () => {
               Data refresh needed
             </div>
           )}
+        </div>
+
+        {/* Batch Search - T075: Navigate to batch details */}
+        <div className="bg-white border border-gray-200 rounded-lg p-4 sm:p-6">
+          <h2 className="text-lg font-semibold text-gray-900 mb-4">Find Batch Details</h2>
+          <BatchSearchBox />
         </div>
 
         {/* Error State - T073: Better error handling */}
